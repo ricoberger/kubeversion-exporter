@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: 0.1.0
+description: Find out which versions are running in your Kubernetes cluster and if there are updates available.
+home: https://github.com/ricoberger/kubeversion-exporter
+icon: https://raw.githubusercontent.com/ricoberger/kubeversion-exporter/master/assets/logo.png
+maintainers:
+  - name: Rico Berger
+    url: https://ricoberger.de
+name: kubeversion-exporter
+version: 0.1.0

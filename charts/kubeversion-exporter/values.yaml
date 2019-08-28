@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: ricoberger/kubeversion-exporter
+  tag: 0.1.0
+  pullPolicy: IfNotPresent
+  args: ["--cluster"]
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name: kubeversion-exporter
+
+service:
+  type: ClusterIP
+  port: 9637
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: kubeversion-exporter.local
+      paths: []
+
+  tls: []
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
