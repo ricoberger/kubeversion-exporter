@@ -3,7 +3,6 @@ WHAT := kubeversion-exporter
 BRANCH          ?= $(shell git rev-parse --abbrev-ref HEAD)
 BUILDTIME       ?= $(shell date '+%Y%m%d-%H:%M:%S')
 BUILDUSER       ?= $(shell id -un)
-DOCKER_USERNAME ?= ricoberger
 PWD             ?= $(shell pwd)
 REPO            ?= github.com/ricoberger/kubeversion-exporter
 REVISION        ?= $(shell git rev-parse HEAD)
@@ -56,12 +55,13 @@ clean:
 
 docker-build: build-linux-amd64
 	for target in $(WHAT); do \
-		docker build -f cmd/$$target/Dockerfile -t "$(DOCKER_USERNAME)/$$target:${VERSION}" --build-arg REVISION=${REVISION} --build-arg VERSION=${VERSION} .; \
+		docker build -f cmd/$$target/Dockerfile -t "$$target:${VERSION}" --build-arg REVISION=${REVISION} --build-arg VERSION=${VERSION} .; \
 	done
 
 docker-publish:
 	for target in $(WHAT); do \
-		docker push "$(DOCKER_USERNAME)/$$target:${VERSION}"; \
+		docker tag $$target:${VERSION} ricoberger/$$target:${VERSION}; \
+		docker tag $$target:${VERSION} docker.pkg.github.com/ricoberger/kubeversion-exporter/$$target:${VERSION}; \
 	done
 
 release: clean docker-build docker-publish
