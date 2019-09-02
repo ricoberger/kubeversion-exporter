@@ -62,6 +62,8 @@ docker-publish:
 	for target in $(WHAT); do \
 		docker tag $$target:${VERSION} ricoberger/$$target:${VERSION}; \
 		docker tag $$target:${VERSION} docker.pkg.github.com/ricoberger/kubeversion-exporter/$$target:${VERSION}; \
+		docker push ricoberger/$$target:${VERSION}; \
+		docker push docker.pkg.github.com/ricoberger/kubeversion-exporter/$$target:${VERSION}; \
 	done
 
 release: clean docker-build docker-publish
